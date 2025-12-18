@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { firestore, collection, addDoc, SHOPPINGLIST, serverTimestamp, query, orderBy, onSnapshot } from './firebase/Config';
+import { firestore, collection, addDoc, SHOPPINGLIST, serverTimestamp, query, orderBy, onSnapshot, setDoc, doc } from './firebase/Config';
 import { useEffect, useState } from 'react';
 import ItemRow from './components/ItemRow';
 import { ShoppingItem } from './types/ShoppingItem';
@@ -32,8 +32,8 @@ export default function App() {
   async function handleAdd(): Promise<void> {
     if (!newItem.trim()) return;
     try {
-      const colRef = collection(firestore, SHOPPINGLIST)
-      await addDoc(colRef, {
+      
+      await setDoc(doc(firestore, SHOPPINGLIST, newItem), {
         item: newItem,
         createdAt: serverTimestamp(),
         found: false
