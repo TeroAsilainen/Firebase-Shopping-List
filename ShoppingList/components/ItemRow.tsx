@@ -14,11 +14,10 @@ export default function ItemRow(Item: ShoppingItem) {
             await updateDoc(docRef, {
                 found: !found
             })
-            console.log("Updated item")
+            setFound(previous => !previous);
+            console.log("Updated item " + Item.item + " found: " + !Item.found)
         } catch (error) {
             console.error('Failed to update item', error)
-        } finally {
-            setFound(previous => !previous);
         }
     }
 
@@ -44,10 +43,10 @@ export default function ItemRow(Item: ShoppingItem) {
             <View style={styles.switchView}>
                 <Switch
                     trackColor={{ false: '#767577', true: 'blue' }}
-                    thumbColor={found ? 'gold' : '#f4f3f4'}
+                    thumbColor={Item.found ? 'gold' : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={toggleSwitch}
-                    value={found} />
+                    value={Item.found} />
                 <Button title='ₓ' onPress={handleDeleteItem} />
             </View>
 
